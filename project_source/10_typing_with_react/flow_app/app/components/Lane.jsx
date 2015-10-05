@@ -1,3 +1,4 @@
+/* @flow */
 import AltContainer from 'alt-container';
 import React from 'react';
 import Notes from './Notes.jsx';
@@ -22,10 +23,21 @@ const noteTarget = {
   }
 };
 
-@DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
-  connectDropTarget: connect.dropTarget()
-}))
-export default class Lane extends React.Component {
+class Lane extends React.Component {
+  props: {
+    lane: {
+      id: string,
+      name?: string,
+      notes?: Array<Object>
+    },
+    connectDropTarget: Function
+  };
+  static defaultProps: {
+    lane: {
+      name: '',
+      notes: []
+    }
+  };
   constructor(props) {
     super(props);
 
@@ -80,3 +92,7 @@ export default class Lane extends React.Component {
     }
   }
 }
+
+export default DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
+  connectDropTarget: connect.dropTarget()
+}))(Lane);
