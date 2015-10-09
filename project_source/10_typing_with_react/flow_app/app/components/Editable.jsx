@@ -2,14 +2,14 @@
 import React from 'react';
 
 export default class Editable extends React.Component {
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
 
     this.state = {
       editing: false
     };
   }
-  render() {
+  render(): any {
     const {value, onEdit, ...props} = this.props;
     const editing = this.state.editing;
 
@@ -44,12 +44,12 @@ export default class Editable extends React.Component {
       editing: true
     });
   }
-  checkEnter = (e) => {
+  checkEnter = (e: Object) => {
     if(e.key === 'Enter') {
       this.finishEdit(e);
     }
   }
-  finishEdit = (e) => {
+  finishEdit = (e: Object) => {
     this.props.onEdit(e.target.value);
 
     this.setState({
