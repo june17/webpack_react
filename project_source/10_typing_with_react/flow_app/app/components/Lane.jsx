@@ -38,25 +38,17 @@ class Lane extends React.Component {
       notes: []
     }
   };
-  constructor(props) {
-    super(props);
-
-    const id = props.lane.id;
-
-    this.addNote = this.addNote.bind(this, id);
-    this.deleteNote = this.deleteNote.bind(this, id);
-    this.editName = this.editName.bind(this, id);
-  }
-  render() {
+  render(): any {
     const {connectDropTarget, lane, ...props} = this.props;
+    const id = lane.id;
 
     return connectDropTarget(
       <div {...props}>
         <div className="lane-header">
           <Editable className="lane-name" value={lane.name}
-            onEdit={this.editName} />
+            onEdit={this.editName.bind(id)} />
           <div className="lane-add-note">
-            <button onClick={this.addNote}>+</button>
+            <button onClick={this.addNote.bind(id)}>+</button>
           </div>
         </div>
         <AltContainer
@@ -67,30 +59,30 @@ class Lane extends React.Component {
         >
           <Notes
             onEdit={this.editNote}
-            onDelete={this.deleteNote} />
+            onDelete={this.deleteNote.bind(id)} />
         </AltContainer>
       </div>
     );
   }
-  addNote(laneId) {
+  addNote(laneId): void {
     NoteActions.create({task: 'New task'});
     LaneActions.attachToLane({laneId});
-  }
-  editNote(id, task) {
+  };
+  editNote(id, task): void {
     NoteActions.update({id, task});
-  }
-  deleteNote(laneId, noteId) {
+  };
+  deleteNote(laneId, noteId): void {
     LaneActions.detachFromLane({laneId, noteId});
     NoteActions.delete(noteId);
-  }
-  editName(id, name) {
+  };
+  editName(id, name): void {
     if(name) {
       LaneActions.update({id, name});
     }
     else {
       LaneActions.delete(id);
     }
-  }
+  };
 }
 
 export default DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
