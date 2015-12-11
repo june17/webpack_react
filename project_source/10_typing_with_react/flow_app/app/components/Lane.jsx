@@ -38,7 +38,7 @@ class Lane extends React.Component {
       notes: []
     }
   };
-  render(): any {
+  render(): ReactElement {
     const {connectDropTarget, lane, ...props} = this.props;
     const id = lane.id;
 
